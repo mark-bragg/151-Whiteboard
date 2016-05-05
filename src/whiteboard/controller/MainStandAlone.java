@@ -11,7 +11,6 @@ public class MainStandAlone {
 		whiteboard.setSize(800, 800);
 		whiteboard.setVisible(true);
 		whiteboard.setLayout(new BorderLayout());
-		System.out.println("new line");
 	}
 
 }

@@ -49,17 +49,17 @@ public class ControlPanel extends JPanel {
 		line = new JButton("Line");
 		text = new JButton("Text");
 		shapeButtonBox = new Box(BoxLayout.X_AXIS);
-		shapeButtonBox.setMaximumSize(new Dimension(0, 0));
+		//shapeButtonBox.setMaximumSize(new Dimension(0, 0));
 		shapeButtonBox.add(add);
 		shapeButtonBox.add(rect);
 		shapeButtonBox.add(oval);
 		shapeButtonBox.add(line);
 		shapeButtonBox.add(text);
-		add(shapeButtonBox);
-		shapeButtonBox.setVisible(true);
 		for(Component comp : shapeButtonBox.getComponents()) {
 			((JComponent)comp).setAlignmentX(Box.LEFT_ALIGNMENT);
 		}
+		add(shapeButtonBox, "North");
+		shapeButtonBox.setVisible(true);
 	}
 	
 	private void setColorButton() {

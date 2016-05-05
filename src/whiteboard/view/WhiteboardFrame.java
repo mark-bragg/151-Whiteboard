@@ -1,10 +1,7 @@
 package whiteboard.view;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.Frame;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
 
 import javax.swing.JScrollPane;

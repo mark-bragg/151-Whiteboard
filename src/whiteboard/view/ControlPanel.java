@@ -2,7 +2,6 @@ package whiteboard.view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.LayoutManager;
 
 import javax.swing.Box;
@@ -10,7 +9,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
-import javax.swing.JTextArea;
 
 public class ControlPanel extends JPanel {
 
@@ -22,7 +20,6 @@ public class ControlPanel extends JPanel {
 	/**
 	 * shape button section
 	 */
-	JTextArea add;
 	private JButton rect;
 	private JButton oval;
 	private JButton line;
@@ -41,16 +38,11 @@ public class ControlPanel extends JPanel {
 	}
 	
 	private void setShapeButtons() {
-		add = new JTextArea("add");
-		add.setBackground(Color.LIGHT_GRAY);
-		add.setEditable(false);
 		rect = new JButton("Rect");
 		oval = new JButton("Oval");
 		line = new JButton("Line");
 		text = new JButton("Text");
 		shapeButtonBox = new Box(BoxLayout.X_AXIS);
-		//shapeButtonBox.setMaximumSize(new Dimension(0, 0));
-		shapeButtonBox.add(add);
 		shapeButtonBox.add(rect);
 		shapeButtonBox.add(oval);
 		shapeButtonBox.add(line);

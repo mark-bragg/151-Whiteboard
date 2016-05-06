@@ -3,17 +3,21 @@ package whiteboard.model;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.util.Random;
 
 public abstract class DShapeModel {
 
 	private Color color;
 	private Rectangle rect;
 	private Point point;
+	Random randomGenerator;
 	
 	public DShapeModel() {
+		randomGenerator = new Random();
 		color = Color.GRAY;
-		rect = new Rectangle(0,0,0,0);
-		point = new Point(0,0);
+		point = new Point(randomGenerator.nextInt(100), randomGenerator.nextInt(100));
+		rect = new Rectangle(getX(), getY(), randomGenerator.nextInt(100), randomGenerator.nextInt(100));
+		
 	}
 
 	public Color getColor() {

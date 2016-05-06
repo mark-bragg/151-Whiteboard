@@ -1,6 +1,7 @@
 package whiteboard.view;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.util.ArrayList;
 
 import javax.swing.JPanel;
@@ -24,15 +25,23 @@ public class Canvas extends JPanel {
 		
 		shapesList = new ArrayList<DShape>();
 	}
+	
+	public void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		for(DShape shape : shapesList) {
+			shape.Draw(g);
+		}
+	}
 
 	public void addShape(DShapeModel model) {
 		DShape shapeToAdd;
 		if(model instanceof DOvalModel) {
+			System.out.println("oval");
 			shapeToAdd = new DOval(model);
 			shapesList.add(shapeToAdd);
-			//oval.paint();
 		}
 		else if(model instanceof DRectModel) {
+			System.out.println("rect");
 			shapeToAdd = new DRect(model);
 			shapesList.add(shapeToAdd);
 			//oval.paint();

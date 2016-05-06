@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -51,25 +52,21 @@ public class ControlPanel extends JPanel {
 		shapeButtonBox.add(text);
 		for(Component comp : shapeButtonBox.getComponents()) {
 			((JComponent)comp).setAlignmentX(Box.LEFT_ALIGNMENT);
-			if((JComponent)comp instanceof JButton) {
-				setShapeButtonAction((JButton)comp);
-			}
 		}
 		add(shapeButtonBox, "North");
 		shapeButtonBox.setVisible(true);
 		
 	}
 	
-	private void setShapeButtonAction(final JButton comp) {
-			
-				comp.addActionListener(new ActionListener() {
-					
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						System.out.println(comp.getName());
-						
-					}
-				});
+	public ArrayList<JButton> getShapeButtons() {
+		ArrayList<JButton> buttons = new ArrayList<JButton>();
+		for(Component comp : shapeButtonBox.getComponents()) {
+			if((JComponent)comp instanceof JButton) {
+				buttons.add((JButton) comp);
+			}
+		}
+		
+		return buttons;
 	}
 	
 	private void setColorButton() {

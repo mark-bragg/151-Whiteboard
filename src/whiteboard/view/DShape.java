@@ -1,5 +1,6 @@
 package whiteboard.view;
 
+import java.awt.Color;
 import java.awt.Graphics;
 
 import whiteboard.model.*;
@@ -22,6 +23,10 @@ public abstract class DShape {
 
 	public void setModel(DShapeModel model) {
 		this.model = model;
+	}
+	
+	public Color getColor() {
+		return model.getColor();
 	}
 	
 	public int getX() {

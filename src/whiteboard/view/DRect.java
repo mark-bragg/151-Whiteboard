@@ -12,6 +12,10 @@ public class DRect extends DShape {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * draw a rectangle with the coordinates and dimensions within model
+	 * set the color of the rectangle to the color within model
+	 */
 	@Override
 	public void Draw(Graphics g) {
 		// TODO Auto-generated method stub

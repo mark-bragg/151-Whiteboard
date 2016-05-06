@@ -17,18 +17,27 @@ public class TableModel extends AbstractTableModel {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * return the number of rows in data
+	 */
 	@Override
 	public int getRowCount() {
 		// TODO Auto-generated method stub
 		return data.size();
 	}
 
+	/**
+	 * return the number of columns in table
+	 */
 	@Override
 	public int getColumnCount() {
 		// TODO Auto-generated method stub
 		return columnNames.length;
 	}
 
+	/**
+	 * get the object in the table located within the cell of rowIndex X columnIndex
+	 */
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
 		// TODO Auto-generated method stub
@@ -37,6 +46,9 @@ public class TableModel extends AbstractTableModel {
 		return data.get(rowIndex).get(columnIndex);
 	}
 	
+	/**
+	 * set the object in the table located within the cell of rowIndex X columnIndex
+	 */
 	public void setValueAt(Object value, int row, int col) {
 		data.get(row).set(col,value);
 		fireTableCellUpdated(row, col);

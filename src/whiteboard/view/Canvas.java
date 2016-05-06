@@ -18,13 +18,14 @@ public class Canvas extends JPanel {
 	private ArrayList<DShape> shapesList;
 
 	public Canvas() {
-		
 		setSize(400, 400);
-		
 		setBackground(Color.WHITE);
 		shapesList = new ArrayList<DShape>();
 	}
 	
+	/**
+	 * iterate over shapesList and calls Draw() on each shape
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		for(DShape shape : shapesList) {
@@ -32,6 +33,11 @@ public class Canvas extends JPanel {
 		}
 	}
 
+	/**
+	 * add a shape to shapesList
+	 * @param model is determined to be a certain DShapeModel subclass
+	 * 	for whatever subclass it is, create a DShape of same shape type
+	 */
 	public void addShape(DShapeModel model) {
 		if(model instanceof DOvalModel) {
 			shapesList.add(new DOval(model));

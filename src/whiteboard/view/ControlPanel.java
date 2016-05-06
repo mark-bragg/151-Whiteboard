@@ -38,6 +38,11 @@ public class ControlPanel extends JPanel {
 		setColorButton();
 	}
 	
+	/**
+	 * create each add shape button and add them to shapeButtonBox
+	 * iterate over the Components in shapeButtonBox and align each of them to the left
+	 * add shapeButtonBox to this at the north border
+	 */
 	private void setShapeButtons() {
 		rect = new JButton("Rect");
 		oval = new JButton("Oval");
@@ -53,9 +58,13 @@ public class ControlPanel extends JPanel {
 		}
 		add(shapeButtonBox, "North");
 		shapeButtonBox.setVisible(true);
-		
 	}
 	
+	/**
+	 * create a new ArrayList<JButton> named buttons
+	 * iterate over shapeButtonBox and add each JButton Component to buttons
+	 * @return buttons
+	 */
 	public ArrayList<JButton> getShapeButtons() {
 		ArrayList<JButton> buttons = new ArrayList<JButton>();
 		for(Component comp : shapeButtonBox.getComponents()) {
@@ -67,10 +76,14 @@ public class ControlPanel extends JPanel {
 		return buttons;
 	}
 	
+	/**
+	 * create setColor JButton and add it to setColorBox
+	 * iterate over the Components in setColorBox and align each of them to the left
+	 */
 	private void setColorButton() {
+		setColor = new JButton("Set Color");
 		setColorBox = new Box(BoxLayout.X_AXIS);
 		setColorBox.setVisible(true);
-		setColor = new JButton("Set Color");
 		setColorBox.add(setColor);
 		add(setColorBox);
 		for(Component comp : setColorBox.getComponents()) {

@@ -12,6 +12,10 @@ public class DOval extends DShape {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * draw an oval with the coordinates and dimensions within model
+	 * set the color of the oval to the color within model
+	 */
 	@Override
 	public void Draw(Graphics g) {
 		// TODO Auto-generated method stub

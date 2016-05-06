@@ -6,7 +6,7 @@ import java.awt.Rectangle;
 import java.util.Random;
 
 public abstract class DShapeModel {
-
+ 
 	private Color color;
 	private Rectangle rect;
 	private Point point;
@@ -15,9 +15,9 @@ public abstract class DShapeModel {
 	public DShapeModel() {
 		randomGenerator = new Random();
 		color = Color.GRAY;
-		point = new Point(randomGenerator.nextInt(100), randomGenerator.nextInt(100));
-		rect = new Rectangle(getX(), getY(), randomGenerator.nextInt(100), randomGenerator.nextInt(100));
-		
+		point = new Point(randomGenerator.nextInt(400), randomGenerator.nextInt(400));
+		rect = new Rectangle(getX(), getY(), randomGenerator.nextInt(400), randomGenerator.nextInt(400));
+		System.out.println("Creating a new DShapeModel");
 	}
 
 	public Color getColor() {

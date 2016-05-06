@@ -22,7 +22,6 @@ public class Canvas extends JPanel {
 		setSize(400, 400);
 		
 		setBackground(Color.WHITE);
-		
 		shapesList = new ArrayList<DShape>();
 	}
 	
@@ -34,17 +33,11 @@ public class Canvas extends JPanel {
 	}
 
 	public void addShape(DShapeModel model) {
-		DShape shapeToAdd;
 		if(model instanceof DOvalModel) {
-			System.out.println("oval");
-			shapeToAdd = new DOval(model);
-			shapesList.add(shapeToAdd);
+			shapesList.add(new DOval(model));
 		}
 		else if(model instanceof DRectModel) {
-			System.out.println("rect");
-			shapeToAdd = new DRect(model);
-			shapesList.add(shapeToAdd);
-			//oval.paint();
+			shapesList.add(new DRect(model));
 		}
 	}
 

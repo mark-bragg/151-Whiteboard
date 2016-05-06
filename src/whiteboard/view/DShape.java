@@ -13,6 +13,7 @@ public abstract class DShape {
 	public DShape(DShapeModel model) {
 		setName(this.getClass().getName());
 		setModel(model);
+		System.out.println("Creating a new DShape");
 	}
 	
 	public abstract void Draw(Graphics g);

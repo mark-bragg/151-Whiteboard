@@ -10,7 +10,7 @@ public class MainController {
 	
 	public MainController() {
 		whiteboard = new WhiteboardFrame("Whiteboard");
-		whiteboard.setSize(800, 800);
+		whiteboard.setSize(1000, 800);
 		whiteboard.setVisible(true);
 		whiteboard.setLayout(new BorderLayout());
 	}

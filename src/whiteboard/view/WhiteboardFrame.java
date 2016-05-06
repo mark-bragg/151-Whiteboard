@@ -28,32 +28,27 @@ public class WhiteboardFrame extends Frame {
 	public WhiteboardFrame(String title) throws HeadlessException {
 		super(title);
 		setResizable(false);
-		canvas = new Canvas();
-		add(canvas, "Center");
-		controlPanel = new ControlPanel(new BorderLayout());
-		add(controlPanel, "West");
-		table = new JTable(new TableModel());
-		tablePane = new JScrollPane(table);
-		controlPanel.add(tablePane, BorderLayout.PAGE_END);
-		table.setFillsViewportHeight(true);
 		setCanvas();
+		setControlPanel();
+		
+		
 	}
 	
 	public void setCanvas() {
-		for(JButton button : controlPanel.getShapeButtons()) {
-			if(button.getText().equals("Rect"))
-				setAction(button, new DRectModel());
-			if(button.getText().equals("Oval"))
-				setAction(button, new DOvalModel());
-		}
+		canvas = new Canvas();
+		add(canvas, "Center");
 	}
 	
-	public void setAction(JButton button, final DShapeModel shapeModel) {
+	public void setAction(JButton button, final String name) {
 		button.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				canvas.addShape(shapeModel);
+				System.out.println("what!");
+				if(name.equals("Rect"))
+					canvas.addShape(new DRectModel());
+				if(name.equals("Oval"))
+					canvas.addShape(new DOvalModel());
 				canvas.repaint();
 			}
 		});
@@ -61,7 +56,21 @@ public class WhiteboardFrame extends Frame {
 	
 	public void setControlPanel() {
 		
+		controlPanel = new ControlPanel(new BorderLayout());
 		
+		add(controlPanel, "West");
+		table = new JTable(new TableModel());
+		
+		tablePane = new JScrollPane(table);
+		
+		controlPanel.add(tablePane, BorderLayout.PAGE_END);
+		table.setFillsViewportHeight(true);
+		for(JButton button : controlPanel.getShapeButtons()) {
+			if(button.getText().equals("Rect"))
+				setAction(button, "Rect");
+			if(button.getText().equals("Oval"))
+				setAction(button, "Oval");
+		}
 	}
 	
 }

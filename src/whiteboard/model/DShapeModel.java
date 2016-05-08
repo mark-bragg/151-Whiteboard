@@ -20,7 +20,7 @@ public abstract class DShapeModel {
 		randomGenerator = new Random();
 		color = Color.GRAY;
 		point = new Point(randomGenerator.nextInt(400), randomGenerator.nextInt(400));
-		rect = new Rectangle(getX(), getY(), randomGenerator.nextInt(400), randomGenerator.nextInt(400));
+		rect = new Rectangle(randomGenerator.nextInt(400), randomGenerator.nextInt(400), randomGenerator.nextInt(400), randomGenerator.nextInt(400));
 	}
 
 	/**
@@ -101,5 +101,14 @@ public abstract class DShapeModel {
 	 */
 	public void setHeight(int height) {
 		rect.height = height;
+	}
+	
+	/**
+	 * get the top left and bottom right coordinates of the shape
+	 * @return bounds array of coordinates
+	 */
+	public int[] getBounds() {
+		int[] bounds = {getX(), getY(), getX() + getWidth(), getY() + getHeight()};
+		return bounds;
 	}
 }

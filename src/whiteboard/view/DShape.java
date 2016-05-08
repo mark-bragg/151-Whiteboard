@@ -46,6 +46,14 @@ public abstract class DShape {
 	}
 	
 	/**
+	 * get the Color of this object's shape
+	 * @return the Color contained within model
+	 */
+	public void setColor(Color color) {
+		model.setColor(color);
+	}
+	
+	/**
 	 * get the x-coordinate location of this object's shape 
 	 * @return the x-coordinate within model
 	 */
@@ -121,4 +129,11 @@ public abstract class DShape {
 		this.name = name;
 	}
 	
+	/**
+	 * get the top left and bottom right bounds of the shape
+	 * @return
+	 */
+	public int[] getBounds() {
+		return model.getBounds();
+	}
 }

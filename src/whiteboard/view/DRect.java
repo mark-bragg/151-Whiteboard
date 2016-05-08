@@ -20,8 +20,9 @@ public class DRect extends DShape {
 	public void Draw(Graphics g) {
 		// TODO Auto-generated method stub
 		Graphics2D g2 = (Graphics2D) g;
-		g2.fillRect(getX(), getY(), getWidth(), getHeight());
 		g2.setColor(getColor());
+		g2.fillRect(getX(), getY(), getWidth(), getHeight());
+		
 	}
 
 }

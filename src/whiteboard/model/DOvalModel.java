@@ -3,9 +3,9 @@ package whiteboard.model;
 
 public class DOvalModel extends DShapeModel {
 
-	public DOvalModel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1764319058265540670L;
 
 }

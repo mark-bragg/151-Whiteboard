@@ -3,9 +3,9 @@ package whiteboard.model;
 
 public class DRectModel extends DShapeModel {
 
-	public DRectModel() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4766060710080588095L;
 
 }

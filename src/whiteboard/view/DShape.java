@@ -2,138 +2,164 @@ package whiteboard.view;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
-import whiteboard.model.*;
+import whiteboard.model.DShapeModel;
+
 
 public abstract class DShape {
-
-	private DShapeModel model;
-	private String name;
-	
-	public DShape(DShapeModel model) {
-		setName(this.getClass().getName());
-		setModel(model);
-	}
+	protected DShapeModel model;
+	abstract void draw(Graphics g);
+	public static int KNOB_SIZE = 9; // pixels
 	
 	/**
-	 * draw the shape
-	 * @param g
-	 */
-	public abstract void Draw(Graphics g);
-
-	/**
-	 * get this object's DShapeModel
-	 * @return model
+	 * @return the model
 	 */
 	public DShapeModel getModel() {
 		return model;
 	}
 
 	/**
-	 * set this object's DShapeModel
-	 * @param model
+	 * @param model the model to set
 	 */
 	public void setModel(DShapeModel model) {
 		this.model = model;
 	}
 	
-	/**
-	 * get the Color of this object's shape
-	 * @return the Color contained within model
-	 */
-	public Color getColor() {
-		return model.getColor();
+	public List<Point> getKnobs() {
+		// TODO caching
+		return computeKnobs();
 	}
 	
 	/**
-	 * get the Color of this object's shape
-	 * @return the Color contained within model
+	 * 
+	 * @return list of knobs
 	 */
-	public void setColor(Color color) {
-		model.setColor(color);
+	protected List<Point> computeKnobs()
+	{
+		LinkedList<Point> points = new LinkedList<Point>();
+		Rectangle bounds = getModel().getBounds();
+		points.add(new Point(bounds.x + 1,                bounds.y + 1));
+		points.add(new Point(bounds.x + 1,                bounds.y + bounds.height - 1));
+		points.add(new Point(bounds.x + bounds.width - 1, bounds.y + bounds.height - 1));
+		points.add(new Point(bounds.x + bounds.width - 1, bounds.y + 1));
+		return points;
 	}
 	
 	/**
-	 * get the x-coordinate location of this object's shape 
-	 * @return the x-coordinate within model
+	 * Resizes the shape using knobs.  Requires the supervisor to keep track of (1) the anchor knob
+	 * (2) the initial position of the selected knob, and (3) the change in the position of the selected knob
+	 * since dragging started.
+	 * @param anchorKnob 
+	 * @param initialPositionOfSelectKnob
+	 * @param deltaSelected
 	 */
-	public int getX() {
-		return model.getX();
+	public void resizeByKnobs(Point anchorKnob, Point initialPositionOfSelectKnob, Point deltaSelected)
+	{
+		//simpleBounds does not correct for negative width/height
+		Rectangle simpleBounds = new Rectangle(); //(Rectangle) getModel().getBounds().clone();
+		simpleBounds.width = (anchorKnob.x - initialPositionOfSelectKnob.x) + deltaSelected.x;
+		simpleBounds.height = (anchorKnob.y - initialPositionOfSelectKnob.y) + deltaSelected.y;
+		
+		Point currentKnobPos = new Point
+			(initialPositionOfSelectKnob.x + deltaSelected.x,
+			 initialPositionOfSelectKnob.y + deltaSelected.y);
+		
+		getModel().setBounds(createRectangleContainingPoints(anchorKnob, currentKnobPos));
 	}
 	
 	/**
-	 * get the y-coordinate location of this object's shape
-	 * @return the y-coordinate within model
-	 */
-	public int getY() {
-		return model.getY();
-	}
-	
-	/**
-	 * get the width of this object's shape
-	 * @return the width value within model
-	 */
-	public int getWidth() {
-		return model.getWidth();
-	}
-	
-	/**
-	 * get the height of this object's shape
-	 * @return the height value within model
-	 */
-	public int getHeight() {
-		return model.getHeight();
-	}
-	
-	/**
-	 * set the x-coordinate location of this object's shape
-	 */
-	public void setX(int x) {
-		model.setX(x);
-	}
-	
-	/**
-	 * set the y-coordinate location of this object's shape 
-	 */
-	public void setY(int y) {
-		model.setY(y);
-	}
-	
-	/**
-	 * set the width of this object's shape 
-	 */
-	public void setWidth(int width) {
-		model.setWidth(width);
-	}
-	
-	/**
-	 * set the height of this object's shape
-	 */
-	public void setHeight(int height) {
-		model.setHeight(height);
-	}
-
-	/**
-	 * get the name of the object
-	 * @return name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * set the name of this object
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-	
-	/**
-	 * get the top left and bottom right bounds of the shape
+	 * Returns a rectangle that contains both the given points.
+	 * @param one
+	 * @param two
 	 * @return
 	 */
-	public int[] getBounds() {
-		return model.getBounds();
+	public static Rectangle createRectangleContainingPoints(Point one, Point two)
+	{
+		Rectangle rect = new Rectangle();
+		if (one.x < two.x)
+			rect.x = one.x;
+		else
+			rect.x = two.x;
+
+		if (one.y < two.y)
+			rect.y = one.y;
+		else
+			rect.y = two.y;
+
+		rect.width = Math.abs(two.x - one.x);
+		rect.height = Math.abs(two.y - one.y);
+		return rect;
+	}
+	
+	
+	/**
+	 * Attempts to select an appropriate knob within this shape given the point of a click.
+	 * Returns the anchor knob and modifies outSelectedKnob to be the selected knob.
+	 * @param click point of click
+	 * @param outSelectedKnob output point for knob selected by mouse
+	 * @return
+	 */
+	public Point attemptKnobSelection(Point click, Point outSelectedKnob)
+	{
+		int index = 0;
+		List<Point> knobs = getKnobs();
+		// loop through the knob points and return true and set the selected/anchor knob
+		// when one is found under the mouse
+		for (Point knobPoint : knobs)
+		{
+			Rectangle knobRect = computeKnobRect(knobPoint);
+			if (knobRect.contains(click))
+			{
+				//return appropriately
+				outSelectedKnob.x = knobPoint.x;
+				outSelectedKnob.y = knobPoint.y;
+				Point anchor = getOppositeKnob(index); // get opposite corner
+				return anchor;
+			}
+			index++;
+		}
+		return null;
+	}
+	
+	/**
+	 * Returns the knob opposite the knob at the given index
+	 * @param knobIndex
+	 * @return
+	 */
+	protected Point getOppositeKnob(int knobIndex)
+	{
+		return getKnobs().get((knobIndex + 2) % 4);
+	}
+	
+	public void drawKnobs(Graphics g)
+	{
+		g.setColor(Color.BLACK);
+		Collection<Point> points = computeKnobs();
+		for (Point knobPoint : points)
+			drawKnobAtPoint(g, knobPoint);
+	}
+	
+	protected static Rectangle computeKnobRect(Point knobPoint)
+	{
+		return new Rectangle
+		(knobPoint.x - (KNOB_SIZE / 2), 
+		 knobPoint.y - (KNOB_SIZE / 2),
+		 KNOB_SIZE,
+		 KNOB_SIZE);
+	}
+	
+	protected void drawKnobAtPoint(Graphics g, Point point)
+	{
+		Rectangle rect = computeKnobRect(point);
+		g.fillRect(rect.x, rect.y, rect.width, rect.height);
+	}
+	
+	public void adjustForDrag(Point anchor, Point initialDragPoint, Point changeInDragPoint ) {
+		
 	}
 }
